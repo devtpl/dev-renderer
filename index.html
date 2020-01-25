@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>标题</title>
+  <!-- 标签图标 -->
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/icon/rose.png">
+  <!-- 移动端兼容 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- SEO -->
+  <meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive"/>
+  <!-- 基础样式 -->
+  <link rel="stylesheet" href="https://cdn.qiniu.songxingguo.com/css/base.css">
+  <!-- Flex 布局 -->
+  <link rel="stylesheet" href="https://cdn.qiniu.songxingguo.com/css/flex.css">
+  <!-- Grid 布局 -->
+  <link rel="stylesheet" href="https://cdn.qiniu.songxingguo.com/css/grid.css">
+  <!-- 字体图标 -->
+  <link rel="stylesheet" href="./css/icon.css">
+  <!-- 页面样式 -->
+  <style>
+  </style>
+</head>
+<body>
+<!-- 页面结构 -->
+<div id='main' class="container flex-column flex-items-center"></div>
+<!-- 引入 jQuery -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<!-- 时间格式库 -->
+<script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.min.js"></script>
+<!-- 页面逻辑 -->
+<script>
+  (async () => {
+    const collUrl = `https://net.songxingguo.workers.dev/go/colls`
+    const {title, data} = await new Promise((resolve) => {
+      $.ajax(collUrl, {
+        type: 'get',
+        success: (data) => {
+          resolve(data)
+        }
+      })
+    })
+    const cId = $('#main')
+    const items = data.reduce((str, {children: [{name, url}]}) => {
+      return str + `<a href="${url}">${name}</a>`
+    }, '')
+    cId.append(`
+      <div class="row col-space-lg">
+        ${items}
+      </div>`)
+  })()
+</script>
+</body>
+</html>
